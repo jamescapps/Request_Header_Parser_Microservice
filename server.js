@@ -25,12 +25,13 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/whoami", function(req, res) {
-  var ipAddress = req.ip
+  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress 
+  var formattedIp = ip.split(',')[0]
   var language = req.headers["accept-language"]
   var software =req.headers['user-agent']
    
   var output = {
-    "ipaddress":ipAddress,
+    "ipaddress":formattedIp,
     "language":language,
     "software":software
   }
